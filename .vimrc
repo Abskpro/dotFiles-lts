@@ -4,10 +4,16 @@ set relativenumber
 imap jj <ESC>
 nnoremap <esc>^[ <esc>^[
 set cursorline
-set autoindent
+" set autoindent
+set smartindent
+set foldmethod=indent
+set foldnestmax=10
+set nofoldenable
+set foldlevel=2
 set hlsearch
 set background=dark
-set tabstop=4
+set tabstop=4 shiftwidth=4 expandtab
+set tw=2
 set nocompatible
 syntax on
 set mouse=c
@@ -60,7 +66,9 @@ Plug 'heavenshell/vim-jsdoc', {
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
   \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+Plug 'w0rp/ale'
 Plug 'dense-analysis/ale'
+Plug 'maximbaz/lightline-ale'
 Plug 'Yggdroot/indentLine'
 Plug 'mattn/emmet-vim'
 
@@ -81,10 +89,10 @@ let g:gruvbox_termcolors=256
 let g:javascript_plugin_jsdoc = 1
 let g:javascript_plugin_flow = 1
 let g:javascript_plugin_jsdoc = 1
-augroup javascript_folding
-	au!
-	au FileType javascript setlocal foldmethod=syntax
-augroup END
+" augroup javascript_folding
+" 	au!
+" 	au FileType javascript setlocal foldmethod=indent
+" augroup END
 
 
 
@@ -371,6 +379,23 @@ function! LightlineFilename()
   let g:unite_force_overwrite_statusline = 0
   let g:vimfiler_force_overwrite_statusline = 0
   let g:vimshell_force_overwrite_statusline = 0
+
+  let g:lightline = {}
+  let g:lightline.component_expand = {
+        \  'linter_checking': 'lightline#ale#checking',
+        \  'linter_infos': 'lightline#ale#infos',
+        \  'linter_warnings': 'lightline#ale#warnings',
+        \  'linter_errors': 'lightline#ale#errors',
+        \  'linter_ok': 'lightline#ale#ok',
+        \ }
+  let g:lightline.component_type = {
+        \     'linter_checking': 'right',
+        \     'linter_infos': 'right',
+        \     'linter_warnings': 'warning',
+        \     'linter_errors': 'error',
+        \     'linter_ok': 'right',
+        \ }
+  let g:lightline.active = { 'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ]] }
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "vim react
