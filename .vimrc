@@ -38,9 +38,13 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-rooter'
+Plug 'godlygeek/tabular'
+Plug 'iamcco/markdown-preview.nvim'
+Plug 'plasticboy/vim-markdown'
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'morhetz/gruvbox' 
 Plug 'pangloss/vim-javascript'
+Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
 Plug 'tpope/vim-surround'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
@@ -154,6 +158,8 @@ let g:indentLine_enabled = 1
   let g:NERDTreeDirArrowCollapsible = '▾'
   let g:NERDTreeWinPos = "left"
   let g:NERDTreeQuitOnOpen = 1
+  let g:NERDTreeWinSize=20
+  let g:Tlist_WinWidth=60
 
 
 
@@ -398,4 +404,85 @@ augroup fzf
 	autocmd  FileType fzf set laststatus=0 noshowmode noruler
 		\| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 augroup END
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"java compile
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au FileType java nnoremap <C-c> :!javac %
+au FileType java nnoremap <C-x> :!java -cp %:p:h %:t:r
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"for typescript compile and run
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au FileType ts nnoremap <C-c> :!tsc % -t ESNEXT
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"for Dart
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+au FileType dart nnoremap <C-c> :!dart %
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Markdown vim
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_folding_level = 6
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_no_default_key_mappings = 1
+let g:vim_markdown_toc_autofit = 1
+let g:vim_markdown_conceal = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"Markdown preview
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin on
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh']
+let g:markdown_syntax_conceal = 0
+let g:markdown_minlines = 100
+
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+let g:instant_markdown_open_to_the_world = 1
+let g:instant_markdown_allow_unsafe_content = 1
+let g:instant_markdown_allow_external_content = 0
+let g:instant_markdown_mathjax = 1
+let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+let g:instant_markdown_autoscroll = 0
+let g:instant_markdown_port = 8888
+let g:instant_markdown_python = 1"
+
+let g:mkdp_auto_start = 0
+let g:mkdp_auto_close = 1
+let g:mkdp_refresh_slow = 0
+let g:mkdp_command_for_global = 0
+let g:mkdp_open_to_the_world = 0
+let g:mkdp_open_ip = ''
+let g:mkdp_browser = ''
+let g:mkdp_echo_preview_url = 0
+let g:mkdp_browserfunc = ''
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {},
+    \ 'flowchart_diagrams': {}
+    \}
+let g:mkdp_markdown_css = ''
+let g:mkdp_highlight_css = ''
+let g:mkdp_port = ''
+" let g:mkdp_page_title = '「${name}」'
+"
+" " normal/insert
+nmap <C-s> <Plug>MarkdownPreview
+nmap <M-s> <Plug>MarkdownPreviewStop
+" nmap <C-p> <Plug>MarkdownPreviewToggle
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"For omnicomplete / React 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
 
