@@ -13,7 +13,6 @@ set foldlevel=2
 set hlsearch
 set background=dark
 set tabstop=4 shiftwidth=4 expandtab
-set tw=2
 set nocompatible
 syntax on
 set mouse=c
